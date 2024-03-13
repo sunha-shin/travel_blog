@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>블로그 홈</title>
+</head>
+<body>
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            
+                <a href="/login/" class="btn btn-outline-primary me-2">로그인</a>
+                <a href="/accounts/register/" class="btn btn-primary">회원가입</a>
+            
+        </div>
+    </header>
+
+    <main class="container">
+        
+    <h1>블로그에 오신 걸 환영합니다</h1>
+    <form method="get" action="/blog/search/">
+        <select name="search_type">
+            <option value="title" >제목</option>
+            <option value="country" >나라</option>
+            <option value="city" >도시</option>
+        </select>
+        <input type="text" name="q" value="" placeholder="Search posts...">
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- 로그인한 사용자만 게시글 작성 버튼 표시 -->
+    
+    
+    <ul class="row">
+        
+            <li class="col-md-4">
+                <a href="/blog/15/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>싱가포르 여행</h2>
+                        <p>Posted on: 2024-03-13 02:50</p>
+                        
+                            <img src="/media/blog/2024/03/12/%EC%B6%9C%EC%84%9D%EC%B2%B4%ED%81%AC.webp" alt="싱가포르 여행" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 싱가포르</p>
+                        <p>City: 싱가포르도시</p>
+                        <p>Day of Visit: </p>
+                    </div>
+                </a>
+            </li>
+        
+            <li class="col-md-4">
+                <a href="/blog/14/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>제목</h2>
+                        <p>Posted on: 2024-03-13 02:38</p>
+                        
+                            <img src="/media/blog/2024/03/12/background_img_7uACA0D.jpg" alt="제목" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 대한민국</p>
+                        <p>City: 서울</p>
+                        <p>Day of Visit: </p>
+                    </div>
+                </a>
+            </li>
+        
+            <li class="col-md-4">
+                <a href="/blog/13/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>한국여행</h2>
+                        <p>Posted on: 2024-03-13 02:36</p>
+                        
+                            <img src="/media/blog/2024/03/12/background_img_JdvjXY8.jpg" alt="한국여행" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 대한민국</p>
+                        <p>City: 서울</p>
+                        <p>Day of Visit: 2024-11-11</p>
+                    </div>
+                </a>
+            </li>
+        
+            <li class="col-md-4">
+                <a href="/blog/12/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>NEW</h2>
+                        <p>Posted on: 2024-03-13 02:32</p>
+                        
+                            <img src="/media/blog/2024/03/12/%EB%AA%A8%EB%91%90%EC%97%B0_%EB%B0%B0%EA%B2%BD_iNDxIYm.webp" alt="NEW" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 대한민국</p>
+                        <p>City: 서울</p>
+                        <p>Day of Visit: 2024-11-11</p>
+                    </div>
+                </a>
+            </li>
+        
+            <li class="col-md-4">
+                <a href="/blog/10/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>수정한 게시글</h2>
+                        <p>Posted on: 2024-03-13 01:30</p>
+                        
+                            <img src="/media/blog/2024/03/12/%EB%AA%A8%EB%91%90%EC%97%B0_%EB%B0%B0%EA%B2%BD_F02M0Lm.webp" alt="수정한 게시글" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 대한민국</p>
+                        <p>City: 서울</p>
+                        <p>Day of Visit: 2024-11-11</p>
+                    </div>
+                </a>
+            </li>
+        
+            <li class="col-md-4">
+                <a href="/blog/9/" style="text-decoration: none; color: inherit;">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 5px; cursor: pointer;">
+                        <h2>111</h2>
+                        <p>Posted on: 2024-03-13 01:29</p>
+                        
+                            <img src="/media/blog/2024/03/12/background_img_bwGybJq.jpg" alt="111" style="width: 100%; max-width: 200px; height: auto;">
+                        
+                        <p>Country: 대한민국</p>
+                        <p>City: 서울</p>
+                        <p>Day of Visit: 2024-11-11</p>
+                    </div>
+                </a>
+            </li>
+        
+    </ul>
+    
+    
+    <!-- Conditionally display the "Back to Blog List" button -->
+    
+
+    </main>
+
+    <footer class="py-3 my-4 border-top">
+        <div class="container">
+            <p class="text-center">© 2024 My Blog.</p>
+        </div>
+    </footer>   
+    
+</body>
+</html>
