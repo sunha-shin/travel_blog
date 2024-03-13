@@ -37,13 +37,14 @@ gantt
     URL 구현               :2024-03-08, 1d
 
     section 모델 구현
-    모델 구현              :2024-03-08, 1d
+    모델 구현              :2024-03-09, 3d
 
     section CRUD 구현
-    CRUD 구현              :2024-03-11, 2024-03-12
+    CRUD 구현              :2024-03-09, 3d
 
     section 인증 구현
-    인증 구현              :2024-03-12, 2024-03-13
+    인증 구현              :2024-03-09, 3d
+
 
 ```
 
@@ -72,7 +73,7 @@ graph TD;
 ```mermaid
 erDiagram
     USER {
-        id INT
+        id INT[PK]
         username VARCHAR
         password VARCHAR
         email VARCHAR
@@ -86,19 +87,19 @@ erDiagram
         nickname VARCHAR
     }
     COMMENT {
-        id INT
-        author_id INT
-        post_id INT
+        id INT[PK]
+        author_id INT[FK]
+        post_id INT[FK]
         content TEXT
         created_at DATETIME
     }
 
     POST {
-        id INT
+        id INT[PK]
         title VARCHAR
         contents TEXT
         main_image VARCHAR
-        author_id INT
+        author_id INT[FK]
         country VARCHAR
         city VARCHAR
         date_of_visit DATE
@@ -107,8 +108,8 @@ erDiagram
     }
 
     IMAGE {
-        id INT
-        post_id INT
+        id INT[PK]
+        post_id INT[FK]
         image VARCHAR
     }
 
@@ -116,7 +117,6 @@ erDiagram
     POST ||--o{ COMMENT : "has"
     USER ||--o{ POST : "authored"
     POST ||--o{ IMAGE : "has"
-
 ```
 ## 화면 정의서
 | 메인화면|특징|
@@ -135,14 +135,41 @@ erDiagram
 |---------------------------------|--------------------------------------------------|
 |![이미지6](img/06_로그인%20후%20글쓰기.jpg) |![이미지7](img/07_블로그%20디테일.jpg) |
 
-| 블로그 디테일|로그아웃 후 메인화면|
+| 로그인 후 댓글란|로그아웃 후 메인화면|
 |---------------------------------|--------------------------------------------------|
 |![이미지8](img/08_Copy%20of%20블로그%20디테일.jpg) |![이미지9](img/09_Copy%20of%20Main.jpg) |
 
 | 로그아웃 후 댓글창|로그아웃 후 댓글창|
 |---------------------------------|--------------------------------------------------
-|![이미지10](img/11_로그아웃%20후%20댓글창.jpg) |![이미지10](img/11_로그아웃%20후%20댓글창.jpg)|
+|![이미지10](img/12_로그아웃%20후%20블로그%20디테일.jpg) |![이미지11](img/11_로그아웃%20후%20댓글창.jpg)|
 
 
 
 ## 트러블슈팅 히스토리
+1. field의 유효성 검사를 통과하지 못하는 경우
+      * form에서 '__all__'을 사용하기 X
+```
+class MyForm(forms.ModelForm):
+    class Meta:
+        model = MyModel
+        fields = ['field1', 'field2', 'field3']  # 필요한 필드만 지정
+
+# 사용 X
+class MyForm(forms.ModelForm):
+    class Meta:
+        model = MyModel
+        fields = '__all__'
+        exclude = ['field4', 'field5', 'field6']  # 제외할 필드 지정
+
+보통 author 기본적으로 user의 이름X, id 정수 값.
+post = Post(title='제목', content='내용', author_id=request.user.id)
+post.save()
+```
+
+2. 저장한 이미지를 불러오지 못할 때: 
+    * settings.py확인하고, urlpatterns 확인. 이미지의 URL로 바로 접속할 수 있는지 admin에서 확인
+  
+3. User 필드를 건드리다가 DB가 엉켰을 경우
+    * migrations폴더에 0001 이렇게 넘버링 된 것을 다 지우고
+    * sqlite3 파일을 지운 후
+    * 다시 makemigrations와 migrate 실행
