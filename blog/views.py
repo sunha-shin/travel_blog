@@ -30,27 +30,26 @@ def blog_create(request):
 
 
 def blog_list(request):
-    search_query = request.GET.get("q", "")
-    search_type = request.GET.get("search_type", "")
-    posts = Post.objects.all().order_by("-created_at")
+    is_search = False
+    query = request.GET.get("q", "")
 
-    if search_query:
-        # 검색 유형에 따라 필터링 조건을 분기합니다.
-        if search_type == "country":
-            posts = posts.filter(country__icontains=search_query)
-        elif search_type == "city":
-            posts = posts.filter(city__icontains=search_query)
-        elif search_type == "title":
-            posts = posts.filter(title__icontains=search_query)
-        else:
-            # 기본적으로 모든 포스트를 반환합니다.
-            pass
+    if query:
+        posts = (
+            Post.objects.filter(
+                Q(title__icontains=query) | Q(contents__icontains=query)
+            )
+            .distinct()
+            .order_by("-created_at")
+        )
+        is_search = True
+    else:
+        posts = Post.objects.all().order_by("-created_at")
 
-    return render(
-        request,
-        "blog/blog_list.html",
-        {"posts": posts, "is_search": bool(search_query)},
-    )
+    context = {
+        "posts": posts,
+        "is_search": is_search,
+    }
+    return render(request, "blog/blog_list.html", context)
 
 
 def blog_detail(request, pk):
@@ -123,12 +122,18 @@ def blog_delete(request, pk):
 
 def blog_search(request):
     query = request.GET.get("q", "")
+    search_type = request.GET.get("search_type", "title")  # 검색 유형을 받아옵니다.
+
     if query:
-        posts = (
-            Post.objects.filter(Q(country__icontains=query) | Q(city__icontains=query))
-            .distinct()
-            .order_by("-created_at")
-        )
+        if search_type == "title":
+            posts = Post.objects.filter(title__icontains=query).distinct()
+        elif search_type == "country":
+            posts = Post.objects.filter(country__icontains=query).distinct()
+        elif search_type == "city":
+            posts = Post.objects.filter(city__icontains=query).distinct()
+        else:
+            # 기본적으로 제목 검색을 수행합니다.
+            posts = Post.objects.filter(title__icontains=query).distinct()
     else:
         posts = Post.objects.none()
 
@@ -136,5 +141,6 @@ def blog_search(request):
         "posts": posts,
         "query": query,
         "is_search": True,
+        "search_type": search_type,  # 검색 유형을 컨텍스트에 추가합니다.
     }
     return render(request, "blog/blog_list.html", context)
